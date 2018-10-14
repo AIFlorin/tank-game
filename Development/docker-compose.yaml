@@ -1,0 +1,52 @@
+version: '3'
+
+services:
+  edge:
+    image: traefik
+    command: --api --docker
+    ports:
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  nginx:
+    restart: always
+    depends_on:
+      - edge
+    image: nginx:alpine
+    labels:
+      - "traefik.enable=true"
+      - 'traefik.frontend.rule=Host:tanks.local'
+      - "traefik.port=80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./../API/public:/usr/share/nginx/html
+  php:
+    build:
+      context: ./php-fpm
+    depends_on:
+      - nginx
+    restart: always
+#    image: php:7-fpm-alpine
+    volumes:
+      - ./../API/:/var/www/html/
+    environment:
+      APP_ENV: dev
+      APP_DEBUG: 1
+      DATABASE_URL: 'mysql://root:root@db:3306/tanks'
+      APP_SECRET: e453cf6712833dd629554991748db4cb
+      CORS_ALLOW_ORIGIN: '^https?://tanks.local(:[0-9]+)?$$'
+
+  db:
+    depends_on:
+      - php
+    image: mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: tanks
+      MYSQL_USER: tanks
+      MYSQL_PASSWORD: tanks
+    volumes:
+      - ./db:/var/lib/mysql
