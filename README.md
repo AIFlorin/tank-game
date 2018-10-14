@@ -4,7 +4,7 @@
 ## Steps to make the game functional:
 * First clone the project `git clone https://github.com/AIFlorin/tank-game.git`
 * Navigate to `/API` folder
-* Run `composer install`
+* Run `composer install--ignore-platform-reqs`
 * Enter inside `/Development` folder;
 * Run `docker-compose up --build -d`
 * Run `docker-compose exec php sh` to enter the php container
