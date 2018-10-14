@@ -1,6 +1,6 @@
 # tank-game
 ## Must have before trying steps bellow:
-* `docker` and `docker-compose`
+* `composer`, `docker` and `docker-compose`
 ## Steps to make the game functional:
 * First clone the project `git clone https://github.com/AIFlorin/tank-game.git`
 * Navigate to `/API` folder
