@@ -12,3 +12,4 @@
 Open the API manager (POSTMAN):
 * Make a call to `POST http://localhost/api/battle_fields` that will give a `BattleField` id.
 * Then make multiple calls to `PUT http://localhost/api/battle_fields/{id}/simulate` untill there will be no more turns.
+* At `GET http://localhost/api` you can see all the available API's
