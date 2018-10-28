@@ -50,3 +50,11 @@ services:
       MYSQL_PASSWORD: tanks
     volumes:
       - ./db:/var/lib/mysql
+
+  composer:
+    image: composer
+    depends_on:
+      - php
+    volumes:
+      - ./../API/:/app
+    command: 'composer install --ignore-platform-reqs --no-scripts'
